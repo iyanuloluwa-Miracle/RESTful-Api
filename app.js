@@ -62,6 +62,19 @@ app
 
 
 ////////  A request targeting a specific article ////////////////////////////
+app.route("/articles/:articleTitle")
+
+.get(function(req, res){
+  Article.findOne({title:req.params.articleTitle}, function(err, foundArticles){
+    if(foundArticles){
+      res.send(foundArticles)
+    }else{
+      res.send("NO articles matching that title was found")
+    }
+
+  })
+})
+
 
 //Get Request
 //app.get('/articles', function(req,res){
