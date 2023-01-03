@@ -75,6 +75,50 @@ app.route("/articles/:articleTitle")
   })
 })
 
+.put(function(req,res){
+  Article.update(
+    {title:req.params.articleTitle},
+    {title:req.body.title, content: req.body.content},
+    {overwrite: true},
+    function(err) {
+      if(!err){
+        res.send("Successfully updated")
+        
+      }
+      
+    }
+     
+  )
+})
+
+.patch(function(req, res){
+  Article.update(
+    {title:req.params.articleTitle},
+    {$set:req.body},
+    function(err){
+      if(!err){
+        res.send("Successfully updated article")
+      }else{
+        res.send(err)
+      }
+
+    }
+  )
+})
+
+.delete(function(req,res){
+  Article.deleteOne(
+    {title:req.params.articleTitle},
+    function(err){
+      if(!err){
+        res.send("Successfully deleted the corresponding article.")
+      }else{
+        res.send(err)
+      }
+    }
+  )
+})
+
 
 //Get Request
 //app.get('/articles', function(req,res){
@@ -125,6 +169,6 @@ app.get("/", (req, res) => {
   res.send("Api Ready!");
 });
 
-app.listen(3002, () => {
-  console.log("Example app listening on port 3002!");
+app.listen(5002, () => {
+  console.log("Example app listening on port 5002!");
 });
